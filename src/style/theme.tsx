@@ -9,31 +9,23 @@ export const theme = createTheme({
       main: "#DA0175",
     },
   },
-  typography: {
-    htmlFontSize: 9,
-  },
   components: {
     MuiTextField: {
-      variants: [
-        {
-          props: {
-            variant: "outlined",
-            fullWidth: true,
-          },
-          style: {},
-        }
-      ]
+      defaultProps: {
+        variant: "outlined",
+        fullWidth: true,
+      },
     },
     MuiSelect: {
-      variants: [
-        {
-          props: {
-            variant: "outlined",
-            fullWidth: true,
-          },
-          style: {},
-        }
-      ]
+      defaultProps: {
+        variant: "outlined",
+        fullWidth: true,
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        variant: "contained",
+      },
     },
   }
 });
