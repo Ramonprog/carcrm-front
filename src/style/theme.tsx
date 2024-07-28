@@ -6,16 +6,13 @@ export const theme = createTheme({
       paper: "#F8F9FA",
 
     },
-
     text: {
       primary: "#3f3f55",
       secondary: "#344054",
     },
-
     primary: {
       main: "#0E8750",
     },
-
     secondary: {
       main: "#DA0175",
     },
@@ -23,4 +20,28 @@ export const theme = createTheme({
   typography: {
     htmlFontSize: 9,
   },
+  components: {
+    MuiTextField: {
+      variants: [
+        {
+          props: {
+            variant: "outlined",
+            fullWidth: true,
+          },
+          style: {},
+        }
+      ]
+    },
+    MuiSelect: {
+      variants: [
+        {
+          props: {
+            variant: "outlined",
+            fullWidth: true,
+          },
+          style: {},
+        }
+      ]
+    },
+  }
 });
