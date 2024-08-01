@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <Alert message="mneu sub" title="meu title" confirmFunc={confirm} buttonName="Abrir alerta" />
+      <Alert message="Após deletado, essa ação nao poderá ser desfeita!" title="Deseja deletar esse item?" confirmFunc={confirm} buttonName="Abrir alerta" />
       <Button variant="contained" onClick={() => {
         dispatch(increment())
       }}>Increment</Button>

@@ -11,11 +11,11 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  minWidth: 400,
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
-  borderRadius: 2,
+  borderRadius: 1,
 };
 
 interface IAlertProps {
@@ -28,6 +28,7 @@ interface IAlertProps {
 }
 
 export function Alert({ title, message, buttonName, confirmFunc, cancelButtonName = 'Cancelar', confirmButtonName = 'Confirmar' }: IAlertProps) {
+
   const dispatch = useAppDispatch();
   const isAlert = useAppSelector((state) => state.alert.isAlert);
   const handleOpen = () => dispatch(change());
@@ -36,6 +37,7 @@ export function Alert({ title, message, buttonName, confirmFunc, cancelButtonNam
   return (
     <div>
       <Button onClick={handleOpen}>{buttonName}</Button>
+
       <Modal
         open={isAlert}
         onClose={handleClose}
@@ -43,10 +45,10 @@ export function Alert({ title, message, buttonName, confirmFunc, cancelButtonNam
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h4" component="h2">{title}</Typography>
+          <Typography id="modal-modal-title" variant="h5" >{title}</Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }} variant='body1'>{message}</Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, gap: 1 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, gap: 5 }}>
             <Button color='error' onClick={handleClose}>{cancelButtonName}</Button>
             <Button onClick={confirmFunc}>{confirmButtonName}</Button>
           </Box>
