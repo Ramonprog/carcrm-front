@@ -1,9 +1,10 @@
-import { Route, Routes, Navigate, Outlet } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
-import { theme } from "../style/theme";
-import { lazy } from "react";
+import React, { Suspense, lazy } from 'react';
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
+import { theme } from '../style/theme';
 
-const App = lazy(() => import("../App"));
+// Lazy load the Auth component
+const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
 
 const MyRoutes = () => {
   const ProtectedRoutes = ({ redirectTo }: { redirectTo: string }) => {
@@ -13,19 +14,16 @@ const MyRoutes = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routes>
-
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<div>teste</div>} />
-
-
-        <Route element={<ProtectedRoutes redirectTo="/" />}>
-          <Route path="/main" element={<div>main</div>} />
-        </Route>
-
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Auth />} />
+          <Route path="/login" element={<div>teste</div>} />
+          <Route element={<ProtectedRoutes redirectTo="/" />}>
+            <Route path="/main" element={<div>main</div>} />
+          </Route>
+        </Routes>
+      </Suspense>
     </ThemeProvider>
-
   );
 };
 

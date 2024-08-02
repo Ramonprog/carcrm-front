@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { rootUrl } from "../../config/App"; 
+import { toast } from "react-toastify";
 
 // Interface para o payload de sucesso
 interface LoginSuccessPayload {
@@ -20,14 +21,17 @@ interface LoginError {
 }
 
 // Definindo o thunk com tipos
-export const loginUser = createAsyncThunk<LoginSuccessPayload, { email: string; password: string }, { rejectValue: LoginError }>(
-  'auth/loginUser',
+export const loginTenant = createAsyncThunk<LoginSuccessPayload, { email: string; password: string }, { rejectValue: LoginError }>(
+  'auth/loginTenant',
   async (credentials, { rejectWithValue }) => {
+    const toastId = toast.loading('Logging in...');
     try {
       const {data} = await axios.post(`${rootUrl}/auth/tenant/login`, credentials);
+      toast.update(toastId, { isLoading: false,render: 'Logged in!', type: 'success', autoClose: 3000 });
       return data; 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      toast.update(toastId, { isLoading: false,render:'Verifique seu e-mail e senha', type: 'error', autoClose: 3000 });
       return rejectWithValue(error.response?.data || { message: 'Unknown error' }); 
     }
   }
@@ -49,14 +53,14 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginTenant.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginTenant.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.status = 'succeeded';
       })
-      .addCase(loginUser.rejected, (state) => {
+      .addCase(loginTenant.rejected, (state) => {
         state.status = 'failed';
       });
   }
