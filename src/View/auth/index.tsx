@@ -2,14 +2,17 @@ import { Container, LoginArea } from "./styles";
 import { useForm } from "react-hook-form"
 import Logo from '../../assets/logo.png'
 import { Button, TextField } from "@mui/material";
+import { useAppDispatch } from "../../store/store";
+import { loginTenant } from "../../store/slices/auth-slice";
 
 type FormData = {
   email: string
   password: string
 }
 
-
 export function Auth() {
+  const dispatch = useAppDispatch()
+
   const {
     register,
     handleSubmit,
@@ -17,7 +20,7 @@ export function Auth() {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
+    dispatch(loginTenant({ email: data.email, password: data.password }))
   });
 
   return (

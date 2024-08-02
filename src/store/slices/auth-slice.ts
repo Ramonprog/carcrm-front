@@ -24,10 +24,11 @@ interface LoginError {
 export const loginTenant = createAsyncThunk<LoginSuccessPayload, { email: string; password: string }, { rejectValue: LoginError }>(
   'auth/loginTenant',
   async (credentials, { rejectWithValue }) => {
-    const toastId = toast.loading('Logging in...');
+    const toastId = toast.loading('Verificando...');
     try {
       const {data} = await axios.post(`${rootUrl}/auth/tenant/login`, credentials);
       toast.update(toastId, { isLoading: false,render: 'Logged in!', type: 'success', autoClose: 3000 });
+           localStorage.setItem('@token-key',data.access_token);
       return data; 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -59,6 +60,7 @@ export const authSlice = createSlice({
       .addCase(loginTenant.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.status = 'succeeded';
+
       })
       .addCase(loginTenant.rejected, (state) => {
         state.status = 'failed';
