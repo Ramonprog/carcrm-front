@@ -9,10 +9,9 @@ interface LoginSuccessPayload {
 }
 
 // Interface para o estado do slice
-interface AuthState {
+export interface AuthState {
   token: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: LoginError | null;
 }
 
 // Interface para o erro
@@ -26,13 +25,13 @@ export const loginTenant = createAsyncThunk<LoginSuccessPayload, { email: string
   async (credentials, { rejectWithValue }) => {
     const toastId = toast.loading('Verificando...');
     try {
-      const {data} = await axios.post(`${rootUrl}/auth/tenant/login`, credentials);
-      toast.update(toastId, { isLoading: false,render: 'Logged in!', type: 'success', autoClose: 3000 });
-           localStorage.setItem('@token-key',data.access_token);
+      const { data } = await axios.post(`${rootUrl}/auth/tenant/login`, credentials);
+      toast.update(toastId, { isLoading: false, render: 'Logged in!', type: 'success', autoClose: 3000 });
+      localStorage.setItem('@token-key', data.access_token);
       return data; 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.update(toastId, { isLoading: false,render:'Verifique seu e-mail e senha', type: 'error', autoClose: 3000 });
+      toast.update(toastId, { isLoading: false, render: 'Verifique seu e-mail e senha', type: 'error', autoClose: 3000 });
       return rejectWithValue(error.response?.data || { message: 'Unknown error' }); 
     }
   }
@@ -43,13 +42,11 @@ export const authSlice = createSlice({
   initialState: {
     token: "",
     status: 'idle',
-    error: null
   } as AuthState,
   reducers: {
     logOut: (state) => {
       state.token = "";
       state.status = 'idle';
-      state.error = null;
     }
   },
   extraReducers: (builder) => {
@@ -60,10 +57,10 @@ export const authSlice = createSlice({
       .addCase(loginTenant.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.status = 'succeeded';
-
       })
       .addCase(loginTenant.rejected, (state) => {
         state.status = 'failed';
+        
       });
   }
 });

@@ -10,11 +10,12 @@ export const Container = styled('div')(({theme}) => ({
 }));
 
 
-export const LoginArea = styled('div')(({
+export const LoginArea = styled('div')(({theme}) =>({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   width: '500px',
+  backgroundColor: theme.palette.background.paper,
   padding: '20px',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
     '& img': {

@@ -13,6 +13,7 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.13",
+    "@hookform/resolvers": "^3.9.0",
     "@mui/material": "^5.16.5",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.2",
@@ -25,7 +26,8 @@
     "react-router-dom": "^6.25.1",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
-    "redux-thunk": "^3.1.0"
+    "redux-thunk": "^3.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

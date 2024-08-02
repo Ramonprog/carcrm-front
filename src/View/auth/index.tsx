@@ -1,26 +1,41 @@
 import { Container, LoginArea } from "./styles";
-import { useForm } from "react-hook-form"
-import Logo from '../../assets/logo.png'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Logo from '../../assets/logo.png';
 import { Button, TextField } from "@mui/material";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { loginTenant } from "../../store/slices/auth-slice";
+import { useNavigate } from "react-router-dom";
 
-type FormData = {
-  email: string
-  password: string
-}
+// Defina o esquema Zod para validação
+const schema = z.object({
+  email: z.string()
+    .email("Email inválido"),
+  password: z.string()
+    .min(6, "A senha deve ter pelo menos 6 caracteres")
+
+});
+
+type FormData = z.infer<typeof schema>;
 
 export function Auth() {
-  const dispatch = useAppDispatch()
-
+  const { status } = useAppSelector(state => state.auth)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(loginTenant({ email: data.email, password: data.password }))
+    dispatch(loginTenant({ email: data.email, password: data.password }));
+    if (status === 'succeeded') {
+      navigate('/vehicles');
+    }
   });
 
   return (
@@ -29,41 +44,26 @@ export function Auth() {
         <img src={Logo} alt="logo" />
         <form onSubmit={onSubmit}>
           <TextField
-            {...register("email", {
-              required: "O email é obrigatório",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Email inválido",
-              },
-            })}
-            label="Email"
+            {...register("email")}
+            label="Digite seu email"
             type="email"
-            variant="outlined"
-            fullWidth
+            required
             error={!!errors.email}
             helperText={errors.email?.message}
           />
 
           <TextField
-            {...register("password", {
-              required: "A senha é obrigatória",
-              minLength: {
-                value: 6,
-                message: "A senha deve ter pelo menos 6 caracteres",
-              },
-            })}
-            label="Password"
+            {...register("password")}
+            label="Digite sua senha"
             type="password"
-            variant="outlined"
-            fullWidth
+            required
             error={!!errors.password}
             helperText={errors.password?.message}
           />
 
-          <Button type="submit">Enviar</Button>
+          <Button type="submit">Entrar</Button>
         </form>
       </LoginArea>
-
     </Container>
-  )
+  );
 }

@@ -8,6 +8,10 @@ export const theme = createTheme({
     secondary: {
       main: "#DA0175",
     },
+    background: {
+      default: "#eae9e9",
+      paper: "#FFFFFF",
+    },
   },
   components: {
     MuiTextField: {
@@ -25,6 +29,7 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: "contained",
+        fullWidth: true,
       },
     },
   }
