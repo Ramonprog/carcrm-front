@@ -3,6 +3,7 @@ import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../style/theme';
 import { useAppSelector } from '../store/store';
+import { Register } from '../View/register';
 
 // Lazy load the Auth component
 const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
@@ -19,7 +20,7 @@ const MyRoutes = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Auth />} />
-          <Route path="/login" element={<div>teste</div>} />
+          <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoutes redirectTo="/" />}>
             <Route path="/vehicles" element={<div>main</div>} />
           </Route>

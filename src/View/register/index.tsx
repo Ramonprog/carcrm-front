@@ -13,13 +13,15 @@ const schema = z.object({
   email: z.string()
     .email("Email inválido"),
   password: z.string()
-    .min(6, "A senha deve ter pelo menos 6 caracteres")
+    .min(6, "A senha deve ter pelo menos 6 caracteres"),
+  name: z.string()
+    .min(3, "A razão social deve ter pelo menos 2 caracteres")
 
 });
 
 type FormData = z.infer<typeof schema>;
 
-export function Auth() {
+export function Register() {
   const { status } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -42,7 +44,17 @@ export function Auth() {
     <Container>
       <LoginArea>
         <img src={Logo} alt="logo" />
+        <h5>Crie sua conta, teste grátis</h5>
         <form onSubmit={onSubmit}>
+          <TextField
+            {...register("name")}
+            label="Razão social"
+            type="text"
+            required
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+
           <TextField
             {...register("email")}
             label="Digite seu email"
@@ -63,8 +75,7 @@ export function Auth() {
 
           <Button type="submit">Entrar</Button>
         </form>
-        <p>Não possui uma conta? <Link to="/register">Crie aqui</Link></p>
-
+        <p>Já possui uma conta? <Link to="/">Entre aqui</Link></p>
       </LoginArea>
     </Container>
   );
