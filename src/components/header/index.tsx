@@ -1,7 +1,8 @@
 import { CustomHeader, ItemsArea, LinksArea } from "./styles";
 import Logo from '../../assets/logo.png'
 import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
+import { CustomMenu } from "../CustomMenu";
 
 export function Header() {
   return (
@@ -11,7 +12,13 @@ export function Header() {
           <Link to="/vehicles"><img src={Logo} alt="logo" /></Link>
         </Box>
         <LinksArea>
-          <Link to="/">Veículos</Link>
+          <Box>
+            <CustomMenu title="Veículos">
+              <MenuItem> <Link to="/vehicles">Dashboard</Link></MenuItem>
+              <MenuItem> <Link to="/vehicles">Clientes</Link></MenuItem>
+              <MenuItem> <Link to="/vehicles">Conta</Link></MenuItem>
+            </CustomMenu>
+          </Box>
           <Link to="#">Clientes</Link>
           <Link to="#">Conta</Link>
         </LinksArea>
