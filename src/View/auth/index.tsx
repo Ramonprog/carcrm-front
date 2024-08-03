@@ -7,6 +7,7 @@ import { Button, TextField } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { loginTenant } from "../../store/slices/auth-slice";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // Defina o esquema Zod para validação
 const schema = z.object({
@@ -37,6 +38,12 @@ export function Auth() {
       navigate('/vehicles');
     }
   });
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      navigate('/vehicles');
+    }
+  }, [status])
 
   return (
     <Container>

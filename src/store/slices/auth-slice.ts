@@ -10,7 +10,7 @@ interface LoginSuccessPayload {
 
 // Interface para o estado do slice
 export interface AuthState {
-  token: string;
+  token: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
@@ -40,7 +40,7 @@ export const loginTenant = createAsyncThunk<LoginSuccessPayload, { email: string
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: "",
+    token: null,
     status: 'idle',
   } as AuthState,
   reducers: {

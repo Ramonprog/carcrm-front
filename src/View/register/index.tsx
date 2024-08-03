@@ -5,8 +5,9 @@ import { z } from "zod";
 import Logo from '../../assets/logo.png';
 import { Button, TextField } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { loginTenant } from "../../store/slices/auth-slice";
 import { Link, useNavigate } from "react-router-dom";
+import { logOut, registerTenant } from "../../store/slices/register-slice";
+import { useEffect } from "react";
 
 // Defina o esquema Zod para validação
 const schema = z.object({
@@ -22,7 +23,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function Register() {
-  const { status } = useAppSelector(state => state.auth)
+  const { status } = useAppSelector(state => state.register)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -34,11 +35,18 @@ export function Register() {
   });
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(loginTenant({ email: data.email, password: data.password }));
+    dispatch(registerTenant({ email: data.email, password: data.password, name: data.name }));
     if (status === 'succeeded') {
-      navigate('/vehicles');
+      navigate(-1);
     }
   });
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      navigate(-1);
+      dispatch(logOut());
+    }
+  }, [status])
 
   return (
     <Container>

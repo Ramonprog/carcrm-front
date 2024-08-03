@@ -3,15 +3,15 @@ import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../style/theme';
 import { useAppSelector } from '../store/store';
-import { Register } from '../View/register';
 
 // Lazy load the Auth component
 const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
+const Register = lazy(() => import('../View/register').then(module => ({ default: module.Register })));
 
 const MyRoutes = () => {
   const { token } = useAppSelector(state => state.auth)
   const ProtectedRoutes = ({ redirectTo }: { redirectTo: string }) => {
-    const isAuthenticated = token !== '';
+    const isAuthenticated = token !== '' && token !== null;
     return isAuthenticated ? <Outlet /> : <Navigate to={redirectTo} />;
   };
 

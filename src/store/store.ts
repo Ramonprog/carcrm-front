@@ -3,13 +3,15 @@ import {  TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { exampleReducer } from "./slices/example-slice";
 import { alertReducer } from "./slices/alert-slice";
 import { authReducer } from "./slices/auth-slice";
+import { registerReducer } from "./slices/register-slice";
 
 
 export const store = configureStore({
   reducer: {
     example: exampleReducer,
     alert: alertReducer,
-    auth: authReducer
+    auth: authReducer,
+    register: registerReducer,
   },
 });
 
