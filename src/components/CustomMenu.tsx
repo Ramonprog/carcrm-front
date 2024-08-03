@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import { ChevronDown } from 'lucide-react';
+import { MenuList } from '@mui/material';
 
 interface MenuProps {
   title: string;
@@ -31,7 +32,7 @@ export function CustomMenu({ title, children }: MenuProps) {
         aria-expanded={open ? 'true' : undefined}
         onMouseOver={handleMouseOver}
         variant='text'
-        sx={{ padding: 0 }}
+        sx={{ marginBottom: '-6px' }}
       >
         {title} <ChevronDown size={16} />
       </Button>
@@ -40,12 +41,11 @@ export function CustomMenu({ title, children }: MenuProps) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        onMouseLeave={handleMouseLeave}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
-        {children}
+        <MenuList onMouseLeave={handleMouseLeave} sx={{ all: 'unset' }}>{children}</MenuList>
       </Menu>
     </div>
   );

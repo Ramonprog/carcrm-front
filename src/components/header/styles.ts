@@ -1,11 +1,18 @@
+import { Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const CustomHeader = styled('header')(({theme}) => ({
   backgroundColor: theme.palette.background.paper,
   height: '5rem',
   width: '100%',
+  padding: '0 1rem',
   borderBottom: '1px solid #eae9e9',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+
+  '& a': { 
+      textDecoration: 'none',
+      color: 'inherit',
+    },
 }));
 
 export const ItemsArea = styled('header')(({
@@ -34,14 +41,14 @@ export const LinksArea = styled('div')(({theme}) => ({
     color: theme.palette.primary.main,
     textDecoration: 'none',
     fontSize: '1.2rem',
-    padding: '24px 0', // Ajuste o padding para adicionar espaço ao redor do texto
+    padding: '24px 0', 
 
-    position: 'relative', // Necessário para o posicionamento do pseudo-elemento
-    display: 'inline-block', // Permite o padding funcionar corretamente
+    position: 'relative',
+    display: 'inline-block', 
     transition: 'color 0.2s',
 
     '&:hover': {
-      color: theme.palette.primary.dark, // Ajuste a cor do texto no hover se desejar
+      color: theme.palette.primary.dark,
     },
 
     '&::after': {
@@ -62,4 +69,9 @@ export const LinksArea = styled('div')(({theme}) => ({
       transformOrigin: 'bottom left',
     },
   },
+}));
+
+export const CustomLink = styled(Link)(({ theme }) => ({
+ textDecoration: 'none',
+  color: theme.palette.primary.main
 }));
