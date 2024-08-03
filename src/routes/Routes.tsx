@@ -7,6 +7,7 @@ import { useAppSelector } from '../store/store';
 // Lazy load the Auth component
 const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
 const Register = lazy(() => import('../View/register').then(module => ({ default: module.Register })));
+const DashboardLayout = lazy(() => import('../layout/dashboasd-layout').then(module => ({ default: module.DashboardLayout })));
 
 const MyRoutes = () => {
   const { token } = useAppSelector(state => state.auth)
@@ -22,7 +23,7 @@ const MyRoutes = () => {
           <Route path="/" element={<Auth />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoutes redirectTo="/" />}>
-            <Route path="/vehicles" element={<div>main</div>} />
+            <Route path="/vehicles" element={<DashboardLayout />} />
           </Route>
         </Routes>
       </Suspense>
