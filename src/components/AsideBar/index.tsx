@@ -1,7 +1,7 @@
-import { Box, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import { BookImage, CarFront, ChartCandlestick, ChevronDown, ChevronUp, DollarSign, HandCoins, Laptop2, Link2, LogOut, MenuIcon, Phone, Rocket, Settings2, Users } from 'lucide-react';
 import * as React from 'react';
-import { CustomLink } from './styles';
+import { CustomLink, DrawerContainer } from './styles';
 import Logo from '../../assets/logo.png';
 
 
@@ -11,11 +11,6 @@ export function AsideBar() {
     site: false,
     financial: false,
   });
-
-  const style = {
-    width: '320px',
-    maxWidth: '80vw',
-  }
 
   return (
     <>
@@ -34,7 +29,7 @@ export function AsideBar() {
       <Drawer
         anchor={'left'}
         open={open} onClose={() => setOpen(false)} >
-        <Box sx={style}>
+        <DrawerContainer>
           <List>
             <ListItem>
               <img src={Logo} alt="logo" height={60} />
@@ -119,7 +114,7 @@ export function AsideBar() {
               <ListItemText> <CustomLink href="#"> Sair</CustomLink></ListItemText>
             </ListItem>
           </List>
-        </Box>
+        </DrawerContainer>
       </Drawer>
     </>
   )
