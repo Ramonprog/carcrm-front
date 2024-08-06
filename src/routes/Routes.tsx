@@ -3,6 +3,7 @@ import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../style/theme';
 import { useAppSelector } from '../store/store';
+import { Loader } from '../components/Loader';
 
 // Lazy load the Auth component
 const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
@@ -20,7 +21,7 @@ const MyRoutes = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/register" element={<Register />} />
