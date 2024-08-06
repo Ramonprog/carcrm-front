@@ -8,6 +8,7 @@ import { useAppSelector } from '../store/store';
 const Auth = lazy(() => import('../View/auth').then(module => ({ default: module.Auth })));
 const Register = lazy(() => import('../View/register').then(module => ({ default: module.Register })));
 const DashboardLayout = lazy(() => import('../layout/dashboasd-layout').then(module => ({ default: module.DashboardLayout })));
+const CreateAndEditVehicles = lazy(() => import('../View/create-and-edit-vehicles').then(module => ({ default: module.CreateAndEditVehicles })));
 
 const MyRoutes = () => {
   const { token } = useAppSelector(state => state.auth)
@@ -23,8 +24,8 @@ const MyRoutes = () => {
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/register" element={<Register />} />
-          <Route element={<ProtectedRoutes redirectTo="/" />}>
-            <Route path="/vehicles" element={<DashboardLayout />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="/vehicles" element={<CreateAndEditVehicles />} />
           </Route>
         </Routes>
       </Suspense>
