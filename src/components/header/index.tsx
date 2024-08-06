@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { CustomHeader, CustomLink, ItemsArea, LinksArea } from "./styles";
+import { CustomHeader, ItemsArea, LinksArea } from "./styles";
 import Logo from '../../assets/logo.png'
 import { Box, Divider, Link, MenuItem } from "@mui/material";
 import { CustomMenu } from "../CustomMenu";
-import { BookImage, CarFront, Link2, LogOut, MessageCircle, Phone, Rocket, Settings2, Users } from "lucide-react";
 import { AppBarComponent } from "../AppBar";
 
 export function Header() {
@@ -24,28 +23,27 @@ export function Header() {
       <CustomHeader>
         <ItemsArea>
           <Box>
-            <Link href="/vehicles"><img src={Logo} alt="logo" /></Link>
+            <Link href="#"><img src={Logo} alt="logo" /></Link>
           </Box>
           <LinksArea>
-            <Link href="#"><CarFront /> Veículos</Link>
-            <Link href="#"><Users /> Proprietários</Link>
+            <Link href="#">Veículos</Link>
+            <Link href="#" >Proprietários</Link>
 
             <CustomMenu title="Site">
-              <MenuItem><CustomLink href="/vehicles"><Phone /> Unidades e Telefone</CustomLink></MenuItem>
-              <MenuItem><CustomLink href="/vehicles"><BookImage /> Minha Logo</CustomLink></MenuItem>
-              <MenuItem><CustomLink href="/vehicles"><Link2 /> Domínio</CustomLink></MenuItem>
+              <MenuItem>Minha Logo</MenuItem>
+              <MenuItem> Domínio</MenuItem>
               <Divider />
-              <MenuItem><CustomLink href="/vehicles"><Rocket /> Otimização para o google</CustomLink></MenuItem>
-              <MenuItem><CustomLink href="/vehicles"><Settings2 /> Configurações</CustomLink></MenuItem>
+              <MenuItem> Otimização para o google</MenuItem>
+              <MenuItem> Configurações</MenuItem>
             </CustomMenu>
 
             <CustomMenu title="Financeiro">
-              <MenuItem><CustomLink href="/vehicles"><Phone /> Meu Plano</CustomLink></MenuItem>
-              <MenuItem><CustomLink href="/vehicles"><BookImage /> Minhas Transações</CustomLink></MenuItem>
+              <MenuItem>Meu Plano</MenuItem>
+              <MenuItem> Minhas Transações</MenuItem>
             </CustomMenu>
 
-            <Link href="#"><MessageCircle /> Ajuda</Link>
-            <Link href="#"><LogOut /> Sair</Link>
+            <Link href="#">Ajuda</Link>
+            <Link href="#">Sair</Link>
           </LinksArea>
         </ItemsArea>
       </CustomHeader>

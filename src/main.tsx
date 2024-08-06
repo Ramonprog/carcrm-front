@@ -6,7 +6,7 @@ import MyRoutes from './routes/Routes.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider as ReduxProvider } from 'react-redux'
 
-import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/css/bootstrap.css'
 import { store } from './store/store.ts'
 
 import { ToastContainer } from 'react-toastify';

@@ -1,18 +1,12 @@
-import { Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const CustomHeader = styled('header')(({theme}) => ({
-  backgroundColor: theme.palette.background.paper,
+ backgroundColor: theme.palette.background.paper,
   height: '5rem',
   width: '100%',
   padding: '0 1rem',
   borderBottom: '1px solid #eae9e9',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-
-  '& a': { 
-      textDecoration: 'none',
-      color: 'inherit',
-    },
 }));
 
 export const ItemsArea = styled('header')(({
@@ -46,6 +40,7 @@ export const LinksArea = styled('div')(({theme}) => ({
     position: 'relative',
     display: 'inline-block', 
     transition: 'color 0.2s',
+    alignItems: 'center',
 
     '&:hover': {
       color: theme.palette.primary.dark,
@@ -71,7 +66,3 @@ export const LinksArea = styled('div')(({theme}) => ({
   },
 }));
 
-export const CustomLink = styled(Link)(({ theme }) => ({
- textDecoration: 'none',
-  color: theme.palette.primary.main
-}));
