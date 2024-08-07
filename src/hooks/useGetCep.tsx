@@ -13,7 +13,7 @@ export function useGetCep(cep: string) {
   const query = useQuery({
     queryKey: ['cep', cep],
     queryFn: () => getCep(cep),
-    enabled: !!cep && cep.length === 8,
+    enabled: !!cep && cep.length === 9,
   })
 
   return query;
