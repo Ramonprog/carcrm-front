@@ -1,18 +1,18 @@
 import { z } from "zod";
-import { useGetBrand } from "../../hooks/useGetBrand"
 import { Container, LeftSide, RightSide, Title, WhiteBox } from "./styles"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { formatCEP } from "../../utils/regex";
+import { useGetCep } from "../../hooks/useGetCep";
+
 const schema = z.object({
   email: z.string()
     .email("Email inválido"),
   password: z.string()
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
   cep: z.string()
-    .min(3, "A razão social deve ter pelo menos 2 caracteres"),
-
+    .max(9, "O CEP deve ter no máximo 9 caracteres"),
 
 });
 
@@ -25,13 +25,19 @@ export function CreateAndEditVehicles() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("🚀 ~ CreateAndEditVehicles ~ data:", data)
+    // console.log("🚀 ~ CreateAndEditVehicles ~ data:", data)
   });
+  // relacionado ao cep
+
+  const { data } = useGetCep((watch('cep')));
+  console.log("🚀 ~ CreateAndEditVehicles ~ data:", data)
 
   return (
     <Container>
@@ -39,20 +45,16 @@ export function CreateAndEditVehicles() {
         <Title>Localização do Veículo</Title>
         <WhiteBox>
           <TextField
-            {...register("cep", {
-              required: true,
-              pattern: /^\d{5}-\d{3}$/,
-              validate: {
-                format: (value) => {
-                  const formatted = formatCEP(value);
-                  return formatted.length === 9 || "CEP deve ter 9 caracteres no formato XXXXX-XXX";
-                },
-              },
-
-            })}
-            label="Razão social"
+            {...register("cep", { required: true })}
+            label="CEP"
             type="text"
+            onChange={(e) => {
+              const formattedValue = formatCEP(e.target.value);
+              setValue('cep', formattedValue);
+            }}
             required
+            sx={{ maxWidth: '200px' }}
+            placeholder="00000-000"
             error={!!errors.cep}
             helperText={errors.cep?.message}
           />
