@@ -9,6 +9,10 @@ import { useGetBrand } from "../../hooks/useGetBrand";
 import { useGetModels } from "../../hooks/useGetModels";
 import { useGetCategories } from "../../hooks/useGetCategories";
 import { useGetVerions } from "../../hooks/useGetVersions";
+import { IBrand } from "../../interface/brand";
+import { IVersion } from "../../interface/version";
+import { IModels } from "../../interface/models";
+import { ICategory } from "../../interface/category";
 
 const schema = z.object({
   city: z.string(),
@@ -19,6 +23,7 @@ const schema = z.object({
   model: z.string(),
   brand: z.string(),
   version: z.string(),
+  year: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -102,7 +107,7 @@ export function CreateAndEditVehicles() {
           <Autocomplete
             {...register("category", { required: true })}
             options={categoryData}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option: ICategory) => option.label}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -119,7 +124,7 @@ export function CreateAndEditVehicles() {
           <Autocomplete
             {...register("brand", { required: true })}
             options={brandData}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option: IBrand) => option.label}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -132,28 +137,41 @@ export function CreateAndEditVehicles() {
               />
             )}
           />
+          <FlexComponent>
 
-          <Autocomplete
-            {...register("model", { required: true })}
-            options={modelData}
-            getOptionLabel={(option) => option.model}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Modelo"
-                required
-                fullWidth
-                placeholder="Modelo"
-              // error={!!errors.model}
-              // helperText={errors.model?.message}
-              />
-            )}
-          />
+            <Autocomplete
+              {...register("model", { required: true })}
+              options={modelData}
+              getOptionLabel={(option: IModels) => option.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Modelo"
+                  required
+                  fullWidth
+                  sx={{ width: '450px' }}
+                  placeholder="Modelo"
+                // error={!!errors.model}
+                // helperText={errors.model?.message}
+                />
+              )}
+            />
+
+            <TextField
+              {...register("year", { required: true })}
+              label="Ano do modelo"
+              required
+              sx={{ maxWidth: '200px' }}
+              placeholder="Ano"
+              type='year'
+            />
+
+          </FlexComponent>
 
           <Autocomplete
             {...register("version", { required: true })}
             options={versionData}
-            getOptionLabel={(option) => option.version}
+            getOptionLabel={(option: IVersion) => option.label}
             renderInput={(params) => (
               <TextField
                 {...params}
