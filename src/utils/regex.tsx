@@ -1,18 +1,11 @@
-export function formatCEP(cep: string): string {
-  // Remove qualquer caractere não numérico
-  const cleaned = cep.replace(/\D/g, '');
+export const formatCEP = (value: string): string => {
+  const cleanedValue = value.replace(/\D/g, '');
 
-  // Verifica se o CEP tem 8 dígitos
-  if (cleaned.length !== 8) {
-    throw new Error('CEP inválido. Deve ter exatamente 8 dígitos.');
-  }
+  const limitedValue = cleanedValue.slice(0, 8);
 
-  // Adiciona a máscara no formato "XXXXX-XXX"
-  const match = cleaned.match(/^(\d{5})(\d{3})$/);
-  if (match) {
-    return `${match[1]}-${match[2]}`;
-  }
+  return limitedValue.replace(/^(\d{5})(\d{0,3})$/, '$1-$2');
+};
 
-  console.log('CEP inválido. Deve ter exatamente 8 dígitos.');
-  return '';
-}
+export const removeSpecialCharacters = (value: string): string => {
+  return value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+};
