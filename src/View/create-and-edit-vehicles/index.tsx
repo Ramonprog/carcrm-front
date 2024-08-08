@@ -21,9 +21,9 @@ const schema = z.object({
     .max(9, "O CEP deve ter no máximo 9 caracteres"),
   category: z.number(),
   model: z.string(),
-  brand: z.string(),
-  version: z.string(),
-  year: z.string(),
+  brand: z.number(),
+  version: z.number(),
+  year: z.number(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -46,9 +46,9 @@ export function CreateAndEditVehicles() {
   });
 
   // requisições react-query
-  const { data: cepData } = useGetCep((watch('cep')));
-  const { data: brandData } = useGetBrand((watch('category')))
-  const { data: modelData } = useGetModels()
+  const { data: cepData } = useGetCep(watch('cep'));
+  const { data: brandData } = useGetBrand(watch('category'))
+  const { data: modelData } = useGetModels(watch('brand'))
   const { data: versionData } = useGetVerions()
   const { data: categoryData } = useGetCategories()
 
@@ -128,6 +128,10 @@ export function CreateAndEditVehicles() {
             {...register("brand", { required: true })}
             options={brandData}
             getOptionLabel={(option: IBrand) => option.label}
+            disabled={!brandData}
+            onChange={(_, option) => {
+              setValue('brand', option!.value);
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -146,6 +150,7 @@ export function CreateAndEditVehicles() {
               {...register("model", { required: true })}
               options={modelData}
               getOptionLabel={(option: IModels) => option.label}
+              disabled={!modelData}
               renderInput={(params) => (
                 <TextField
                   {...params}
