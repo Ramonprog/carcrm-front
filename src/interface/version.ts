@@ -3,4 +3,5 @@ export interface IVersion {
   label: string;
   value: number;
   brand_id: number;
+  model_id: number;
 }

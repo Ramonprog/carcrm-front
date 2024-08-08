@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 export const Container = styled('div')(({theme}) => ({
   display: 'flex',
   gap: '220px',
-  height: '100vh',
+  height: '100%',
   maxWidth:'87.5rem',
   margin: '0 auto',
   marginTop: '3rem',
@@ -16,6 +16,7 @@ export const LeftSide = styled('form')(({theme}) => ({
 
 export const RightSide = styled('div')(({theme}) => ({
   width: '400px',
+  opacity:0
 }));
 
 export const WhiteBox = styled('div')(({theme}) => ({

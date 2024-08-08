@@ -20,7 +20,7 @@ const schema = z.object({
   cep: z.string()
     .max(9, "O CEP deve ter no máximo 9 caracteres"),
   category: z.number(),
-  model: z.string(),
+  model: z.number(),
   brand: z.number(),
   version: z.number(),
   year: z.number(),
@@ -49,7 +49,7 @@ export function CreateAndEditVehicles() {
   const { data: cepData } = useGetCep(watch('cep'));
   const { data: brandData } = useGetBrand(watch('category'))
   const { data: modelData } = useGetModels(watch('brand'))
-  const { data: versionData } = useGetVerions()
+  const { data: versionData } = useGetVerions(watch('model'))
   const { data: categoryData } = useGetCategories()
 
   return (
@@ -151,6 +151,9 @@ export function CreateAndEditVehicles() {
               options={modelData}
               getOptionLabel={(option: IModels) => option.label}
               disabled={!modelData}
+              onChange={(_, option) => {
+                setValue('model', option!.value);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -180,6 +183,7 @@ export function CreateAndEditVehicles() {
             {...register("version", { required: true })}
             options={versionData}
             getOptionLabel={(option: IVersion) => option.label}
+            disabled={!versionData}
             renderInput={(params) => (
               <TextField
                 {...params}
