@@ -19,7 +19,7 @@ const schema = z.object({
   state: z.string(),
   cep: z.string()
     .max(9, "O CEP deve ter no máximo 9 caracteres"),
-  category: z.string(),
+  category: z.number(),
   model: z.string(),
   brand: z.string(),
   version: z.string(),
@@ -47,7 +47,7 @@ export function CreateAndEditVehicles() {
 
   // requisições react-query
   const { data: cepData } = useGetCep((watch('cep')));
-  const { data: brandData } = useGetBrand()
+  const { data: brandData } = useGetBrand((watch('category')))
   const { data: modelData } = useGetModels()
   const { data: versionData } = useGetVerions()
   const { data: categoryData } = useGetCategories()
@@ -108,11 +108,14 @@ export function CreateAndEditVehicles() {
             {...register("category", { required: true })}
             options={categoryData}
             getOptionLabel={(option: ICategory) => option.label}
+            onChange={(_, option) => {
+              setValue('category', option!.value);
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Categoria"
-                required
+                required={true}
                 fullWidth
                 placeholder="Categoria"
               // error={!!errors.category}
