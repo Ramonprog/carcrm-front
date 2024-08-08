@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Container, FlexComponent, LeftSide, RightSide, Title, WhiteBox } from "./styles"
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Autocomplete, TextField } from "@mui/material";
 import { formatCEP } from "../../utils/regex";
@@ -13,6 +13,7 @@ import { IBrand } from "../../interface/brand";
 import { IVersion } from "../../interface/version";
 import { IModels } from "../../interface/models";
 import { ICategory } from "../../interface/category";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const schema = z.object({
   city: z.string(),
@@ -23,7 +24,7 @@ const schema = z.object({
   model: z.number(),
   brand: z.number(),
   version: z.number(),
-  year: z.number(),
+  year: z.date().nullable(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -36,9 +37,13 @@ export function CreateAndEditVehicles() {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch
+    watch,
+    control
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      year: null
+    }
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -167,7 +172,7 @@ export function CreateAndEditVehicles() {
                 />
               )}
             />
-
+            {/* 
             <TextField
               {...register("year", { required: true })}
               label="Ano do modelo"
@@ -175,6 +180,20 @@ export function CreateAndEditVehicles() {
               sx={{ maxWidth: '200px' }}
               placeholder="Ano"
               type='year'
+            /> */}
+            <Controller
+              name="year"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <DatePicker
+                  label="Ano do modelo"
+                  openTo="year"
+                  views={['year']}
+                  value={value || null}
+                  onChange={onChange}
+
+                />
+              )}
             />
 
           </FlexComponent>
