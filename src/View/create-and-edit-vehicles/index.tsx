@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import { Container, FlexComponent, LeftSide, RightSide, Title, WhiteBox } from "./styles"
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Divider, TextField } from "@mui/material";
 import { formatCEP } from "../../utils/regex";
 import { useGetCep } from "../../hooks/useGetCep";
 import { useGetBrand } from "../../hooks/useGetBrand";
@@ -14,6 +15,9 @@ import { IVersion } from "../../interface/version";
 import { IModels } from "../../interface/models";
 import { ICategory } from "../../interface/category";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useGetCarColors } from "../../hooks/useGetCarColors";
+import { IColor } from "../../interface/color";
+import NumericFormatCustom from "../../components/InputFormatCurrency";
 
 const schema = z.object({
   city: z.string(),
@@ -25,6 +29,9 @@ const schema = z.object({
   brand: z.number(),
   version: z.number(),
   year: z.date().nullable(),
+  color: z.number(),
+  price: z.string(),
+  km: z.string()
 });
 
 type FormData = z.infer<typeof schema>;
@@ -56,6 +63,9 @@ export function CreateAndEditVehicles() {
   const { data: modelData } = useGetModels(watch('brand'))
   const { data: versionData } = useGetVerions(watch('model'))
   const { data: categoryData } = useGetCategories()
+  const { data: colorData } = useGetCarColors()
+
+
 
   return (
     <Container>
@@ -123,8 +133,7 @@ export function CreateAndEditVehicles() {
                 required={true}
                 fullWidth
                 placeholder="Categoria"
-              // error={!!errors.category}
-              // helperText={errors.category?.message}
+
               />
             )}
           />
@@ -172,15 +181,7 @@ export function CreateAndEditVehicles() {
                 />
               )}
             />
-            {/* 
-            <TextField
-              {...register("year", { required: true })}
-              label="Ano do modelo"
-              required
-              sx={{ maxWidth: '200px' }}
-              placeholder="Ano"
-              type='year'
-            /> */}
+
             <Controller
               name="year"
               control={control}
@@ -191,7 +192,6 @@ export function CreateAndEditVehicles() {
                   views={['year']}
                   value={value || null}
                   onChange={onChange}
-
                 />
               )}
             />
@@ -210,11 +210,55 @@ export function CreateAndEditVehicles() {
                 required
                 fullWidth
                 placeholder="Versão"
-              // error={!!errors.version}
-              // helperText={errors.version?.message}
               />
             )}
           />
+          <Divider />
+          <FlexComponent>
+            <Autocomplete
+              {...register("color", { required: true })}
+              options={colorData}
+              getOptionLabel={(option: IColor) => option.label}
+              disabled={!colorData}
+              fullWidth
+              onChange={(_, option) => {
+                setValue('color', option!.value);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Cor"
+                  required
+                  fullWidth
+                  placeholder="Cor"
+                />
+              )}
+            />
+
+            <TextField
+              {...register("km", { required: true })}
+              label="KM"
+              required
+
+              sx={{ maxWidth: '200px' }}
+              placeholder="KM"
+              type='text'
+            />
+
+
+            {/* <TextField
+              {...register("price", { required: true })}
+              label="Preço"
+              required
+              InputProps={{
+                inputComponent: NumericFormatCustom as any,
+              }}
+              sx={{ maxWidth: '200px' }}
+              placeholder="Preço"
+              type='text'
+            /> */}
+
+          </FlexComponent>
         </WhiteBox>
       </LeftSide>
       <RightSide>
